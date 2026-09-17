@@ -17,7 +17,7 @@ export const useCreateCategory = (): UseMutationResult<
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ data }) => categoryRepo.createCategory(data),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: categoryQueryKeys.all,
       });
