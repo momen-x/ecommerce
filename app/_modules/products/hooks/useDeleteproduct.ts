@@ -6,9 +6,8 @@ export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (id: number) => productRepo.deleteProduct(id),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: productsQueryKeys.all });
-      //   queryClient.setQueryData(productsQueryKeys.one(data.id), data);
     },
   });
 };

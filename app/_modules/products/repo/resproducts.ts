@@ -1,5 +1,5 @@
 import { api } from "@/app/_utils/axiosInstance";
-import { ProductRepo } from "./products";
+import { ExtendedProducts, ProductRepo } from "./products";
 import { CreateProductData } from "../dto/create-product";
 import { UpdateProductData } from "../dto/update-product";
 import { Products } from "../entities/products";
@@ -14,14 +14,14 @@ export const productRepo: ProductRepo = {
     page?: number,
     limit = 10,
     catagoryId = 0,
-  ): Promise<Products[]> {
+  ): Promise<ExtendedProducts> {
     if (catagoryId === 0) {
-      const res = await api.get<Products[]>(
+      const res = await api.get<ExtendedProducts>(
         `${DOMAIN_URL}?page=${page}&limit=${limit}`,
       );
       return res.data;
     }
-    const res = await api.get<Products[]>(
+    const res = await api.get<ExtendedProducts>(
       `${DOMAIN_URL}/categories/${catagoryId}?page=${page}&limit=${limit}`,
     );
     return res.data;
