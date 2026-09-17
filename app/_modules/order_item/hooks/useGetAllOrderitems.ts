@@ -1,0 +1,10 @@
+import { useQuery } from "@tanstack/react-query";
+import { orderItemQueryKeys } from "./order_item-query-keys";
+import { orderItemRepo } from "../repo/resorderItem";
+
+export const useGetAllOrderitems = () => {
+  return useQuery({
+    queryKey: orderItemQueryKeys.all,
+    queryFn: () => orderItemRepo.getAllOrderItems(),
+  });
+};
