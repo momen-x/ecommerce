@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProviders from "./_providers/react-query.provider";
+import Headers from "@/components/sharing/header";
+import Footer from "@/components/sharing/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +27,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ReactQueryProviders>{children}</ReactQueryProviders>
+        <ReactQueryProviders>
+          <Headers />
+          {children}
+          <div className="mt-5">
+            <Footer />
+          </div>
+        </ReactQueryProviders>
       </body>
     </html>
   );
