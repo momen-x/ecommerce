@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { createProductInput } from "./create-product";
+import { createProductDto } from "./create-product";
 
-export const updateProductSchema = createProductInput
+export const updateProductSchema = createProductDto
   .partial()
   .refine((data) => Object.values(data).some((value) => value !== undefined), {
     message: "At least one field must be updated",

@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const createProductInput = z.object({
+export const createProductDto = z.object({
   title: z
     .string()
     .min(3, "Title must be at least 3 characters long")
@@ -10,7 +10,7 @@ export const createProductInput = z.object({
     .string()
     .min(3, "Description must be at least 3 characters long"),
   categoryId: z.coerce.number(),
-  imagesUrl: z.instanceof(File),
+  image: z.instanceof(File, { message: "Enter a valid image file" }),
 });
 
-export type CreateProductData = z.infer<typeof createProductInput>;
+export type createProductData = z.infer<typeof createProductDto>;

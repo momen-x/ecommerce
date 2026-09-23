@@ -1,5 +1,7 @@
 import { ProductsView } from "@/app/_modules/products/views/products-view";
 import { Metadata } from "next";
+import Image from "next/image";
+import productsImg from "@/public/assets/products.png";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -8,7 +10,15 @@ export const metadata: Metadata = {
 };
 
 const ProductsPage = () => {
-  return <ProductsView />;
+  return (
+    <ProductsView>
+      <Image
+        src={productsImg}
+        alt="Products"
+        className="w-full h-64 object-cover"
+      />
+    </ProductsView>
+  );
 };
 
 export default ProductsPage;

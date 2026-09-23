@@ -3,13 +3,13 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import { productRepo } from "../repo/resproducts";
+import { productRepo } from "../repo/resProducts";
 import { productsQueryKeys } from "./products-query-keys";
 import { UpdateProductData } from "../dto/update-product";
-import { Products } from "../entities/products";
+import { Product } from "../entities/products";
 
-export const useUpdateCourse = (): UseMutationResult<
-  Products,
+export const useUpdateProduct = (): UseMutationResult<
+  Product,
   Error,
   { data: UpdateProductData; id: number }
 > => {

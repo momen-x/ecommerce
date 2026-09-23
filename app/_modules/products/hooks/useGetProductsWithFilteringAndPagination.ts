@@ -1,19 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { productsQueryKeys } from "./products-query-keys";
-import { productRepo } from "../repo/resproducts";
+import { productRepo } from "../repo/resProducts";
 
-export const useGetProductsWithFiltaeringAndPagination = (
+export const useGetProductsWithFilteringAndPagination = (
   page?: number,
   limit?: number,
-  catagoryid?: number,
+  categoryId?: number,
 ) => {
   return useQuery({
-    queryKey: productsQueryKeys.filtered(page, limit, catagoryid),
+    queryKey: productsQueryKeys.filtered(page, limit, categoryId),
     queryFn: () =>
-      productRepo.getProductsWithFiltaeringAndPagination(
+      productRepo.getProductsWithFilteringAndPagination(
         page,
         limit,
-        catagoryid,
+        categoryId,
       ),
   });
 };

@@ -1,5 +1,5 @@
 import { Category } from "@/app/_modules/categories/entities/category";
-export interface Products extends Category {
+export interface Product extends Category {
   id: number;
   title: string;
   description: string;

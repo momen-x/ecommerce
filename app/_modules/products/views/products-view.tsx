@@ -1,20 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import {
-  ShoppingCart,
-  Star,
   ChevronLeft,
   ChevronRight,
   SlidersHorizontal,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useGetProductsWithFiltaeringAndPagination } from "../hooks/useGetProductsWithFilteringAndPagination";
+import { Card } from "@/components/ui/card";
+import { useGetProductsWithFilteringAndPagination } from "../hooks/useGetProductsWithFilteringAndPagination";
 import {
   Select,
   SelectContent,
@@ -23,31 +18,58 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useGetAllCategories } from "../../categories/hooks/useGetAllCategories";
-import { ChildernProps } from "@/app/_types/type";
+import { ChildrenProps } from "@/app/_types/type";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { CardSkeleton } from "@/components/skeletons/cards-skeletons";
+import QueryErrorState from "@/components/sharing/query-error-state";
+import ProductCard from "./product-card";
 
-export function ProductsView({ children }: ChildernProps) {
+
+export function ProductsView({ children }: ChildrenProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const categoryId = searchParams.get("categoryId") ?? "0";
+
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [activeCategoryId, setActiveCategoryId] = useState<number>(0);
+  const [activeCategoryId, setActiveCategoryId] = useState<number>(
+    Number.isNaN(Number(categoryId)) ? 0 : Number(categoryId),
+  );
 
-  const { data, isLoading, isError } =
-    useGetProductsWithFiltaeringAndPagination(
+  const { data, isLoading, isError, refetch, isFetching } =
+    useGetProductsWithFilteringAndPagination(
       currentPage,
-      12,
+      2,
       activeCategoryId === 0 ? undefined : activeCategoryId,
     );
-
   const { data: categories } = useGetAllCategories();
+ 
 
   const handleCategoryChange = (value: string | null) => {
-    setActiveCategoryId(value ? Number(value) : 0);
-    setCurrentPage(1); // Reset to page 1 on category change
+    const categoryId = value ? Number(value) : 0;
+
+    setActiveCategoryId(categoryId);
+    setCurrentPage(1);
+
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (value && value !== "0") {
+      params.set("categoryId", value);
+    } else {
+      params.delete("categoryId");
+    }
+
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   if (isError) {
     return (
-      <div className="flex min-h-[300px] items-center justify-center font-medium text-rose-500">
-        Failed to load products. Please try again.
-      </div>
+      <QueryErrorState
+        title="Failed to load Products"
+        description="We couldn’t load the products. Please try again"
+        isRetrying={isFetching}
+        onRetry={() => refetch()}
+      />
     );
   }
 
@@ -74,7 +96,7 @@ export function ProductsView({ children }: ChildernProps) {
           >
             <SelectTrigger
               id="category-select"
-              className="h-9 min-w-[180px] rounded-lg border-muted bg-background text-xs font-medium focus:ring-1 focus:ring-emerald-600"
+              className="h-9 min-w-45 rounded-lg border-muted bg-background text-xs font-medium focus:ring-1 focus:ring-emerald-600"
             >
               <SelectValue placeholder="All Categories" />
             </SelectTrigger>
@@ -98,60 +120,19 @@ export function ProductsView({ children }: ChildernProps) {
       {children}
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
         {isLoading
           ? Array.from({ length: 10 }).map((_, index) => (
-              <ProductCardSkeleton key={index} />
+              <CardSkeleton key={index} />
             ))
           : data?.products?.map((product) => (
               <Card
                 key={product.id}
                 className="group flex flex-col justify-between overflow-hidden border border-slate-100 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
               >
-                <CardContent className="p-0">
-                  {/* Image Display */}
-                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-50 dark:bg-slate-800">
-                    <Image
-                      src={product.imageUrl}
-                      alt={product.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
-                      className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                    />
+                <ProductCard product={product} />
 
-                    <Badge
-                      variant="secondary"
-                      className="absolute left-3 top-3 border-none bg-emerald-500/10 text-emerald-700 backdrop-blur-md dark:bg-emerald-950/80 dark:text-emerald-300"
-                    >
-                      New
-                    </Badge>
-                  </div>
-
-                  {/* Product Details */}
-                  <div className="space-y-1.5 p-4">
-                    <h3 className="line-clamp-1 font-medium text-slate-800 dark:text-slate-200">
-                      {product.title}
-                    </h3>
-
-                    <div className="flex items-center gap-1 text-xs text-slate-500">
-                      <Star className="size-3.5 fill-amber-400 text-amber-400" />
-                      <span className="font-semibold text-slate-700 dark:text-slate-300">
-                        4.8
-                      </span>
-                      <span>(120)</span>
-                    </div>
-
-                    <div className="pt-1 text-base font-bold text-slate-900 dark:text-white">
-                      ${Number(product.price).toFixed(2)}
-                    </div>
-                  </div>
-                </CardContent>
-
-                <CardFooter className="p-4 pt-0">
-                  <Button className="w-full bg-[#3f6212] font-medium text-white shadow-none transition-colors hover:bg-[#365314]">
-                    <ShoppingCart className="mr-2 size-4" /> Add to Cart
-                  </Button>
-                </CardFooter>
+           
               </Card>
             ))}
       </div>
@@ -214,20 +195,6 @@ export function ProductsView({ children }: ChildernProps) {
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-function ProductCardSkeleton() {
-  return (
-    <div className="flex flex-col justify-between space-y-3 rounded-2xl border p-3">
-      <Skeleton className="aspect-[4/3] w-full rounded-xl" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-3 w-1/2" />
-        <Skeleton className="h-5 w-1/4" />
-      </div>
-      <Skeleton className="h-9 w-full rounded-lg" />
     </div>
   );
 }
