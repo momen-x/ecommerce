@@ -1,10 +1,10 @@
 import z from "zod";
 
-export const createCategoryInput = z.object({
+export const createCategoryDto = z.object({
   title: z.string().min(3, "Title must be at least 3 characters long"),
   description: z
     .string()
     .min(3, "Description must be at least 3 characters long"),
 });
 
-export type CreateCategoryData = z.infer<typeof createCategoryInput>;
+export type createCategoryData = z.infer<typeof createCategoryDto>;

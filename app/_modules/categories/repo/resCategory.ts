@@ -1,13 +1,13 @@
 import { api } from "@/app/_utils/axiosInstance";
 import { CategoryRepo } from "./category";
-import { CreateCategoryData } from "../dto/create-category";
+import { createCategoryData } from "../dto/create-category";
 import { Category } from "../entities/category";
-import { UpdateCategoryData } from "../dto/update-category";
+import { updateCategoryData } from "../dto/update-category";
 
 const DOMAIN_URL = "/categories";
 
 export const categoryRepo: CategoryRepo = {
-  createCategory: async function (data: CreateCategoryData): Promise<Category> {
+  createCategory: async function (data: createCategoryData): Promise<Category> {
     const res = await api.post<Category>(DOMAIN_URL, data);
     return res.data;
   },
@@ -21,7 +21,7 @@ export const categoryRepo: CategoryRepo = {
   },
   updateCategory: async function (
     id: number,
-    data: UpdateCategoryData,
+    data: updateCategoryData,
   ): Promise<Category> {
     const res = await api.put<Category>(`${DOMAIN_URL}/${id}`, data);
     return res.data;

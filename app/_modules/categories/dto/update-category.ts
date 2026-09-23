@@ -1,9 +1,9 @@
 import z from "zod";
-import { createCategoryInput } from "./create-category";
+import { createCategoryDto } from "./create-category";
 
-export const updateCategorySchema = createCategoryInput
+export const updateCategoryDto = createCategoryDto
   .partial()
   .refine((data) => Object.values(data).some((value) => value !== undefined), {
     message: "At least one field must be updated",
   });
-export type UpdateCategoryData = z.infer<typeof updateCategorySchema>;
+export type updateCategoryData = z.infer<typeof updateCategoryDto>;

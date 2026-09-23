@@ -7,12 +7,12 @@ import {
 import { categoryRepo } from "../repo/resCategory";
 import { categoryQueryKeys } from "./category-query-keys";
 import { Category } from "../entities/category";
-import { UpdateCategoryData } from "../dto/update-category";
+import { updateCategoryData } from "../dto/update-category";
 
-export const useUpdateLesson = (): UseMutationResult<
+export const useUpdateCategory = (): UseMutationResult<
   Category,
   Error,
-  { categoryId: number; data: UpdateCategoryData }
+  { categoryId: number; data: updateCategoryData }
 > => {
   const queryClient = useQueryClient();
 
