@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { productsQueryKeys } from "./products-query-keys";
-import { productRepo } from "../repo/resProducts";
+import { productRepo } from "../repo/resproducts";
 
 export const useGetProductsWithFilteringAndPagination = (
   page?: number,
