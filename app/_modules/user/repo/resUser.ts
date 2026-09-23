@@ -1,7 +1,7 @@
 import { api } from "@/app/_utils/axiosInstance";
 import { UserRepo } from "./user";
 import { ChangePasswordData } from "../dto/change-password";
-import { UpdateUserData } from "../dto/update-user-data";
+import { updateUserData } from "../dto/update-user-data";
 import { User } from "../entities/user";
 import { uploadUserImageData } from "../dto/upload-user-image";
 
@@ -15,7 +15,7 @@ export const userRepo: UserRepo = {
     const res = await api.get<User[]>(`${BASE_URL}`);
     return res.data;
   },
-  updateMe: async function (data: UpdateUserData): Promise<User> {
+  updateMe: async function (data: updateUserData): Promise<User> {
     const res = await api.put<User>(`${BASE_URL}`, data);
     return res.data;
   },
@@ -37,11 +37,11 @@ export const userRepo: UserRepo = {
   uploadUserPhoto: async function (file: uploadUserImageData): Promise<User> {
     const formData = new FormData();
     formData.append("image", file.image);
-    const res = await api.post<User>(`${BASE_URL}/photo-upload`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const res = await api.post<User>(`${BASE_URL}/photo-upload`, formData);
+    return res.data;
+  },
+  deleteUserPhoto: async function (): Promise<User> {
+    const res = await api.delete<User>(`${BASE_URL}/photo-delete`);
     return res.data;
   },
 };

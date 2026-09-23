@@ -7,12 +7,12 @@ import {
 import { userQueryKeys } from "./user-query-keys";
 import { userRepo } from "@/app/_modules/user/repo/resUser";
 import { User } from "../entities/user";
-import { UpdateUserData } from "../dto/update-user-data";
+import { updateUserData } from "../dto/update-user-data";
 
 export const useUpdateUser = (): UseMutationResult<
   User,
   Error,
-  UpdateUserData
+  updateUserData
 > => {
   const queryClient = useQueryClient();
 

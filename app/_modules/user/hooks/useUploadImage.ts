@@ -11,7 +11,7 @@ import {
 import { userRepo } from "../repo/resUser";
 import { userQueryKeys } from "./user-query-keys";
 
-export const useUplodImage = (): UseMutationResult<
+export const useUploadImage = (): UseMutationResult<
   User,
   Error,
   uploadUserImageData
