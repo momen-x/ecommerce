@@ -3,7 +3,7 @@ import { OrderItemRepo } from "./order_item";
 import { createOrderItemData } from "../dto/order_item";
 import { OrderItem } from "../entities/order_items";
 
-const BASE_URL = "/order_items";
+const BASE_URL = "/order-items";
 
 export const orderItemRepo: OrderItemRepo = {
   createOrderItem: async function (
