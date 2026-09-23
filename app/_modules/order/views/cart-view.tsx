@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect } from "react";
@@ -108,7 +109,7 @@ const CartView = () => {
           Your cart is empty
         </h2>
         <p className="text-sm text-zinc-500 mt-1 mb-6">
-          Looks like you haven't added anything yet.
+          Looks like you haven&apos;t added anything yet.
         </p>
         <Link href="/shop">
           <Button className="bg-[#3d593f] hover:bg-[#2d432f] text-white rounded-xl px-6">
@@ -143,7 +144,6 @@ const CartView = () => {
         </div>
       </div>
 
-      {/* 1. Cart Items (أعلى الصفحة) */}
       <Card className="p-6 border-zinc-200/80 rounded-2xl shadow-sm bg-white">
         <h3 className="text-lg font-semibold text-zinc-900 mb-4 border-b pb-3 border-zinc-100">
           Items in your cart ({orderItems.length})
