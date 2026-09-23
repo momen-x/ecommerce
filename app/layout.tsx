@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ReactQueryProviders from "./_providers/react-query.provider";
+import ReactQueryProviders from "@/app/_providers/react-query.provider";
 import Headers from "@/components/sharing/header";
 import Footer from "@/components/sharing/footer";
+import ToasterProvider from "./_providers/toast-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <ReactQueryProviders>
+          <ToasterProvider />
           <Headers />
           {children}
           <div className="mt-5">

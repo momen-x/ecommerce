@@ -56,10 +56,6 @@ export default function Footer() {
                 Contact Us
               </Link>
 
-              <Link href="/returns" className="hover:text-foreground">
-                Returns & Refunds
-              </Link>
-
               <Link href="/faq" className="hover:text-foreground">
                 FAQ
               </Link>

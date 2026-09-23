@@ -1,5 +1,5 @@
 "use client";
-import { User, ChevronDown,  LogOut } from "lucide-react";
+import { User, ChevronDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -10,42 +10,40 @@ import {
   DropdownMenuLinkItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-
 } from "@/components/ui/dropdown-menu";
-// import { useLogout } from "../../auth/hooks/useLogout";
+import { useLogout } from "@/app/_modules/auth/hooks/useLogout";
 import { useGetCurrentUser } from "@/app/_modules/user/hooks/useGetCurrentUser";
 import default_user_image from "@/public/assets/default-user1.png";
-// import { toast } from "react-toastify";
-// import { useRouter } from "next/navigation";
-// import { getErrorMessage } from "@/app/_utils/get-axios-error-message";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { getErrorMessage } from "@/app/_utils/get-axios-error-message";
+import { AUTH_ROUTES } from "@/app/_modules/auth/utils/constants";
 
 export function ProfileDropdown() {
   const { data: user } = useGetCurrentUser();
-  //   const { mutate: logout } = useLogout();
-//   const router = useRouter();
+  const { mutate: logout } = useLogout();
+  const router = useRouter();
 
   const getInitials = () => {
     if (user?.firstName) return user.firstName.substring(0, 2).toUpperCase();
     if (user?.email) return user.email.substring(0, 2).toUpperCase();
     return "GU";
   };
-//   const userId = user?.id ?? "";
-  //   const handleLogout = () => {
-  //     logout(undefined, {
-  //       onSuccess: () => {
-  //         toast.success("Logged out successfully");
-  //         clearUserAiChats(userId);
-  //         router.push(AUTH_ROUTES.login);
-  //         router.refresh();
-  //       },
-  //       onError: (error) => {
-  //         console.error("Logout failed:", error);
-  //         toast.error(
-  //           getErrorMessage(error) ?? "Logout failed. Please try again.",
-  //         );
-  //       },
-  //     });
-  //   };
+  const handleLogout = () => {
+    logout(undefined, {
+      onSuccess: () => {
+        toast.success("Logged out successfully");
+        router.push(AUTH_ROUTES.login);
+        router.refresh();
+      },
+      onError: (error) => {
+        console.error("Logout failed:", error);
+        toast.error(
+          getErrorMessage(error) ?? "Logout failed. Please try again.",
+        );
+      },
+    });
+  };
 
   return (
     <DropdownMenu>
@@ -102,7 +100,7 @@ export function ProfileDropdown() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          //   onClick={handleLogout}
+          onClick={handleLogout}
           className="flex cursor-pointer items-center gap-2 text-red-500 focus:text-red-500 focus:bg-red-500/10"
         >
           <LogOut className="h-4 w-4" />

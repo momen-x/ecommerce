@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { ProfileDropdown } from "./dropdown-user-menu";
 import logo from "@/public/assets/logo.png";
 import Image from "next/image";
+import CartIcon from "@/app/_modules/order/views/cart-icon";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -90,7 +91,7 @@ const Headers = () => {
             ) : user ? (
               <>
                 <ProfileDropdown />
-                {/* todo cart component  */}
+                <CartIcon />
               </>
             ) : (
               <div className="hidden md:flex items-center gap-2">
