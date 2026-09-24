@@ -8,4 +8,5 @@ export interface OrderRepo {
   getOrderCart(): Promise<Order>;
   getCartItemsCount(): Promise<number>;
   updateOrder(orderId: number, data: updateOrderData): Promise<Order>;
+  updateOrderToCompleted(): Promise<{ message: string; order: Order }>;
 }

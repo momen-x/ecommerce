@@ -1,5 +1,5 @@
 
-import CategoriesView from "./_modules/categories/views/categories";
+import LandingContent from "./_modules/landing/view/landing";
 export default function Home() {
-  return <CategoriesView />;
+  return <LandingContent />;
 }

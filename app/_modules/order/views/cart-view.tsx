@@ -5,8 +5,6 @@ import { useEffect } from "react";
 import Link from "next/link";
 import {
   Trash2,
-  Plus,
-  Minus,
   ArrowRight,
   ShoppingBag,
   ShieldCheck,
@@ -145,9 +143,14 @@ const CartView = () => {
       </div>
 
       <Card className="p-6 border-zinc-200/80 rounded-2xl shadow-sm bg-white">
-        <h3 className="text-lg font-semibold text-zinc-900 mb-4 border-b pb-3 border-zinc-100">
-          Items in your cart ({orderItems.length})
-        </h3>
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-zinc-900 mb-4 border-b pb-3 border-zinc-100">
+            Items in your cart ({orderItems.length})
+          </h3>
+          <Link href={"/products"}>
+            <Button className={""}>shopping continue</Button>
+          </Link>
+        </div>
         <div className="divide-y divide-zinc-100">
           {orderItems.map((item: any) => (
             <div
@@ -165,21 +168,6 @@ const CartView = () => {
                 <p className="text-xs text-zinc-500">${item.price} each</p>
               </div>
 
-              <div className="flex items-center gap-2 border border-zinc-200 rounded-lg p-1 bg-zinc-50/50">
-                <button
-                  className="w-6 h-6 flex items-center justify-center rounded text-zinc-600 hover:bg-white transition-all disabled:opacity-30"
-                  disabled={item.quantity <= 1}
-                >
-                  <Minus className="w-3 h-3" />
-                </button>
-                <span className="w-4 text-center text-xs font-medium text-zinc-800">
-                  {item.quantity}
-                </span>
-                <button className="w-6 h-6 flex items-center justify-center rounded text-zinc-600 hover:bg-white transition-all">
-                  <Plus className="w-3 h-3" />
-                </button>
-              </div>
-
               <span className="font-semibold text-zinc-900 text-sm min-w-15 text-right">
                 ${(Number(item.price) * item.quantity).toFixed(2)}
               </span>
@@ -192,9 +180,7 @@ const CartView = () => {
         </div>
       </Card>
 
-      {/* 2. Form & Order Summary (أسفل المنتجات) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Shipping Form (أسفل يسار) */}
         <div className="lg:col-span-8">
           <Card className="p-6 border-zinc-200/80 rounded-2xl shadow-sm bg-white">
             <h2 className="text-lg font-semibold text-zinc-900 mb-6 flex items-center gap-2 border-b pb-3 border-zinc-100">

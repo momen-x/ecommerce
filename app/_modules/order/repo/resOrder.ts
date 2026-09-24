@@ -26,8 +26,20 @@ export const orderRepo: OrderRepo = {
     const res = await api.get<number>(`${BASE_URL}/cart/count`);
     return res.data;
   },
-  updateOrder: async (orderId: number, data: updateOrderData): Promise<Order> => {
+  updateOrder: async (
+    orderId: number,
+    data: updateOrderData,
+  ): Promise<Order> => {
     const res = await api.put<Order>(`${BASE_URL}/${orderId}`, data);
+    return res.data;
+  },
+  updateOrderToCompleted: async function (): Promise<{
+    message: string;
+    order: Order;
+  }> {
+    const res = await api.post<{ message: string; order: Order }>(
+      `${BASE_URL}`,
+    );
     return res.data;
   },
 };
