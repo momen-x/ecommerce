@@ -132,7 +132,7 @@ const CartPayment = () => {
                 </span>
 
                 <p className="truncate font-medium text-zinc-800">
-                  {cartData.customerEmail || "Not provided"}
+                  {cartData.email || "Not provided"}
                 </p>
               </div>
 
