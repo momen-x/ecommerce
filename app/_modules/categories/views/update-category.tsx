@@ -3,6 +3,7 @@
 import QueryErrorState from "@/components/sharing/query-error-state";
 import { useGetOneCategory } from "../hooks/useGetOneCategory";
 import { CategoryForm } from "./category-form";
+import FormSkeleton from "@/components/skeletons/form-skeleton";
 
 const UpdateCategory = ({ categoryId }: { categoryId: number }) => {
   const {
@@ -13,9 +14,8 @@ const UpdateCategory = ({ categoryId }: { categoryId: number }) => {
     isFetching,
   } = useGetOneCategory(categoryId);
 
-  //todo update loading state
   if (isLoading) {
-    return <>loading.....</>;
+    return <FormSkeleton />;
   }
   if (!category || isError) {
     return (
