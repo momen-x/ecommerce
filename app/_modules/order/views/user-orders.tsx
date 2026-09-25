@@ -126,17 +126,16 @@ const UserOrders = () => {
                           </p>
 
                           <p className="mt-0.5 text-xs text-zinc-500">
-                            Quantity: {item.orderItemsQuantity}
+                            Quantity: {item.quantity}
                           </p>
                         </div>
                       </div>
 
                       <p className="text-sm font-semibold text-zinc-900">
                         $
-                        {(
-                          Number(item.orderItemPrice) *
-                          Number(item.orderItemsQuantity)
-                        ).toFixed(2)}
+                        {(Number(item.price) * Number(item.quantity)).toFixed(
+                          2,
+                        )}
                       </p>
                     </div>
                   ))}

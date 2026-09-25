@@ -18,8 +18,8 @@ export interface OrderAdapter {
 }
 
 export interface OrderItem {
-  orderItemsQuantity: number;
-  orderItemPrice: number;
+  quantity: number;
+  price: number;
   productId: number;
   productImage: string;
   productTitle: string;

@@ -171,15 +171,12 @@ const CartView = () => {
                   Product #{item.productId}
                 </h4>
                 <p className="text-xs text-zinc-500">
-                  ${item.orderItemPrice} each
+                  ${item.price.toFixed(2)} each
                 </p>
               </div>
 
               <span className="font-semibold text-zinc-900 text-sm min-w-15 text-right">
-                $
-                {(
-                  Number(item.orderItemPrice) * item.orderItemsQuantity
-                ).toFixed(2)}
+                ${(Number(item.price) * item.quantity).toFixed(2)}
               </span>
 
               <button className="p-1 text-zinc-400 hover:text-red-500 transition-colors">

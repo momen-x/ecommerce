@@ -1,7 +1,7 @@
 import type { OrderItemWithProduct, OrderWithProduct } from "../entities/order";
 import { OrderAdapter, OrderItem } from "../entities/order-adapter";
 
-export const orderAdapter = (order: OrderWithProduct): OrderAdapter => {
+export const mapOrderToAdapter = (order: OrderWithProduct): OrderAdapter => {
   return {
     id: order.id,
     address: order.address,
@@ -11,7 +11,7 @@ export const orderAdapter = (order: OrderWithProduct): OrderAdapter => {
     phone: order.phone,
     status: order.status,
     orderItems: order.orderItems.map((item) => mapOrderItems(item)),
-    totalPrice: order.totalPrice,
+    totalPrice: Number(order.totalPrice),
     updatedAt: order.updatedAt,
     userFirstName: order.user.firstName,
     userLastName: order.user.lastName,
@@ -22,8 +22,8 @@ export const orderAdapter = (order: OrderWithProduct): OrderAdapter => {
 
 const mapOrderItems = (item: OrderItemWithProduct): OrderItem => {
   return {
-    orderItemPrice: item.price,
-    orderItemsQuantity: item.quantity,
+    price: Number(item.price),
+    quantity: item.quantity,
     productId: item.product.id,
     productTitle: item.product.title,
     productDescription: item.product.description,
