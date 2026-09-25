@@ -3,10 +3,10 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import { productRepo } from "../repo/resproducts";
+import { productRepo } from "../repo/resProducts";
 import { productsQueryKeys } from "./products-query-keys";
 import { UpdateProductData } from "../dto/update-product";
-import { Product } from "../entities/products";
+import { Product } from "../entities/product";
 
 export const useUpdateProduct = (): UseMutationResult<
   Product,

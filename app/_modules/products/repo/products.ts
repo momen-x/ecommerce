@@ -1,7 +1,7 @@
 import { Category } from "../../categories/entities/category";
 import { createProductData } from "../dto/create-product";
 import { UpdateProductData } from "../dto/update-product";
-import { Product } from "../entities/products";
+import { Product } from "../entities/product";
 
 export interface ExtendedProducts {
   success: boolean;

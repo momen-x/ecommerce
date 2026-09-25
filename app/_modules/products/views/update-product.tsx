@@ -3,6 +3,7 @@
 import QueryErrorState from "@/components/sharing/query-error-state";
 import { useGetOneProduct } from "../hooks/useGetOneProduct";
 import ProductsForm from "./products-form";
+import FormSkeleton from "@/components/skeletons/form-skeleton";
 
 const UpdateProduct = ({ productId }: { productId: number }) => {
   const {
@@ -12,8 +13,7 @@ const UpdateProduct = ({ productId }: { productId: number }) => {
     isFetching,
     refetch,
   } = useGetOneProduct(productId);
-  //todo update is loading state
-  if (isLoading) return <>loading...</>;
+  if (isLoading) return <FormSkeleton />;
 
   if (!product || isError) {
     return (

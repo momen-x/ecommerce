@@ -21,6 +21,7 @@ import QueryErrorState from "@/components/sharing/query-error-state";
 import { useCreateOrderItem } from "../../order_item/hooks/useCreateOrderItems";
 import { toast } from "react-toastify";
 import { getErrorMessage } from "@/app/_utils/get-axios-error-message";
+import CardDetailsSkeleton from "@/components/skeletons/card-details-skeleton";
 
 export function ProductDetailsView({ id }: { id: number }) {
   const [quantity, setQuantity] = useState<number>(1);
@@ -62,7 +63,7 @@ export function ProductDetailsView({ id }: { id: number }) {
   };
 
   if (isLoading) {
-    return <div>loading ....</div>;
+    return <CardDetailsSkeleton />;
   }
   if (isError) {
     <QueryErrorState

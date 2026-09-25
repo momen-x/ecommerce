@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { productsQueryKeys } from "./products-query-keys";
-import { productRepo } from "../repo/resproducts";
+import { productRepo } from "../repo/resProducts";
 
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();

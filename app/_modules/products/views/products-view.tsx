@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  SlidersHorizontal,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, SlidersHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -24,7 +20,6 @@ import { CardSkeleton } from "@/components/skeletons/cards-skeletons";
 import QueryErrorState from "@/components/sharing/query-error-state";
 import ProductCard from "./product-card";
 
-
 export function ProductsView({ children }: ChildrenProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -39,11 +34,10 @@ export function ProductsView({ children }: ChildrenProps) {
   const { data, isLoading, isError, refetch, isFetching } =
     useGetProductsWithFilteringAndPagination(
       currentPage,
-      2,
+      8,
       activeCategoryId === 0 ? undefined : activeCategoryId,
     );
   const { data: categories } = useGetAllCategories();
- 
 
   const handleCategoryChange = (value: string | null) => {
     const categoryId = value ? Number(value) : 0;
@@ -131,8 +125,6 @@ export function ProductsView({ children }: ChildrenProps) {
                 className="group flex flex-col justify-between overflow-hidden border border-slate-100 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
               >
                 <ProductCard product={product} />
-
-           
               </Card>
             ))}
       </div>

@@ -2,7 +2,7 @@ import { api } from "@/app/_utils/axiosInstance";
 import { ExtendedProducts, ProductRepo } from "./products";
 import { createProductData } from "../dto/create-product";
 import { UpdateProductData } from "../dto/update-product";
-import { Product } from "../entities/products";
+import { Product } from "../entities/product";
 
 const DOMAIN_URL = "/products";
 export const productRepo: ProductRepo = {
