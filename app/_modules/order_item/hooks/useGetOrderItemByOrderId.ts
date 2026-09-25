@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { orderItemQueryKeys } from "./order_item-query-keys";
-import { orderItemRepo } from "../repo/resOrderItem";
+import { orderItemRepo } from "../repo/resorderItem";
 
 export const useGetOrderItemByOrderId = (orderId: number) => {
   return useQuery({
