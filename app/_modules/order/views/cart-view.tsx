@@ -27,6 +27,8 @@ import { getErrorMessage } from "@/app/_utils/get-axios-error-message";
 import { updateOrderFields as fields } from "../utils/fields";
 import ValidationInput from "@/components/inputs/validation-input";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import CartSkeleton from "@/components/skeletons/order-skeletons";
 
 const CartView = () => {
   const { data: cartData, isLoading } = useOrderCart();
@@ -50,7 +52,7 @@ const CartView = () => {
 
     form.reset({
       address: cartData.address ?? "",
-      customerEmail: cartData.customerEmail ?? "",
+      customerEmail: cartData.email ?? "",
       phone: cartData.phone ?? "",
     });
   }, [cartData, form]);
@@ -90,11 +92,7 @@ const CartView = () => {
   }
 
   if (isLoading) {
-    return (
-      <div className="max-w-6xl mx-auto px-4 py-16 text-center text-zinc-500">
-        Loading cart details...
-      </div>
-    );
+    return <CartSkeleton />;
   }
 
   if (!cartData || orderItems.length === 0) {
@@ -109,7 +107,7 @@ const CartView = () => {
         <p className="text-sm text-zinc-500 mt-1 mb-6">
           Looks like you haven&apos;t added anything yet.
         </p>
-        <Link href="/shop">
+        <Link href="/products">
           <Button className="bg-[#3d593f] hover:bg-[#2d432f] text-white rounded-xl px-6">
             Start Shopping
           </Button>
@@ -152,24 +150,36 @@ const CartView = () => {
           </Link>
         </div>
         <div className="divide-y divide-zinc-100">
-          {orderItems.map((item: any) => (
+          {orderItems.map((item) => (
             <div
-              key={item.id}
+              key={item.productId}
               className="py-4 first:pt-0 last:pb-0 flex gap-4 items-center"
             >
-              <div className="relative w-16 h-16 bg-zinc-100 rounded-xl overflow-hidden shrink-0 flex items-center justify-center text-zinc-400">
-                <ShoppingBag className="w-6 h-6 opacity-40" />
+              <div className="flex items-center">
+                <Image
+                  src={item.productImage}
+                  alt="NovaCart logo"
+                  width={150}
+                  height={50}
+                  priority
+                  className="h-auto w-35 object-contain sm:w-38.75   "
+                />
               </div>
 
               <div className="flex-1 min-w-0">
                 <h4 className="font-medium text-zinc-900 text-sm truncate">
                   Product #{item.productId}
                 </h4>
-                <p className="text-xs text-zinc-500">${item.price} each</p>
+                <p className="text-xs text-zinc-500">
+                  ${item.orderItemPrice} each
+                </p>
               </div>
 
               <span className="font-semibold text-zinc-900 text-sm min-w-15 text-right">
-                ${(Number(item.price) * item.quantity).toFixed(2)}
+                $
+                {(
+                  Number(item.orderItemPrice) * item.orderItemsQuantity
+                ).toFixed(2)}
               </span>
 
               <button className="p-1 text-zinc-400 hover:text-red-500 transition-colors">

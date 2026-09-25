@@ -1,7 +1,9 @@
 import { api } from "@/app/_utils/axiosInstance";
 import { OrderRepo } from "./order";
-import { Order } from "../entities/order";
+import { Order, OrderWithProduct } from "../entities/order";
 import { updateOrderData } from "../dto/update-order";
+import { orderAdapter } from "../adapters/toOrder";
+import { OrderAdapter } from "../entities/order-adapter";
 
 const BASE_URL = "/orders";
 
@@ -14,13 +16,13 @@ export const orderRepo: OrderRepo = {
     const res = await api.get<Order>(`${BASE_URL}/${orderId}`);
     return res.data;
   },
-  getUserOrders: async (): Promise<Order[]> => {
-    const res = await api.get<Order[]>(`${BASE_URL}/user-orders`);
-    return res.data;
+  getUserOrders: async (): Promise<OrderAdapter[]> => {
+    const res = await api.get<OrderWithProduct[]>(`${BASE_URL}/user-orders`);
+    return res.data.map((item) => orderAdapter(item));
   },
-  getOrderCart: async function (): Promise<Order> {
-    const res = await api.get<Order>(`${BASE_URL}/cart`);
-    return res.data;
+  getOrderCart: async function (): Promise<OrderAdapter> {
+    const res = await api.get<OrderWithProduct>(`${BASE_URL}/cart`);
+    return orderAdapter(res.data);
   },
   getCartItemsCount: async (): Promise<number> => {
     const res = await api.get<number>(`${BASE_URL}/cart/count`);

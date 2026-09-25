@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 
 import { orderItemQueryKeys } from "./order_item-query-keys";
-import { orderItemRepo } from "../repo/resorderItem";
+import { orderItemRepo } from "../repo/resOrderItem";
 import { OrderItem } from "../entities/order_items";
 import { createOrderItemData } from "../dto/order_item";
 import { ORDER_CART_COUNT_KEY } from "../../order/hooks/order-quires-key";

@@ -3,7 +3,7 @@ import {
   UseMutationResult,
   useQueryClient,
 } from "@tanstack/react-query";
-import { orderItemRepo } from "../repo/resorderItem";
+import { orderItemRepo } from "../repo/resOrderItem";
 import { orderItemQueryKeys } from "./order_item-query-keys";
 
 export const useDeleteOrderItem = (): UseMutationResult<

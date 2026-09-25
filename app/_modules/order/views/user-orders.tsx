@@ -5,16 +5,14 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useGetUserOrders } from "../hooks/useGetUserOrders";
+import Image from "next/image";
+import LoadingPage from "@/app/loading";
 
 const UserOrders = () => {
   const { data: orders, isLoading } = useGetUserOrders();
 
   if (isLoading) {
-    return (
-      <div className="mx-auto max-w-5xl px-4 py-16 text-center text-zinc-500">
-        Loading your orders...
-      </div>
-    );
+    return <LoadingPage />;
   }
 
   if (!orders || orders.length === 0) {
@@ -55,7 +53,7 @@ const UserOrders = () => {
 
         {/* Orders */}
         <div className="space-y-5">
-          {orders.map((order: any) => (
+          {orders.map((order) => (
             <Card
               key={order.id}
               className="overflow-hidden rounded-3xl border-zinc-200 bg-white shadow-sm"
@@ -105,14 +103,21 @@ const UserOrders = () => {
                 </div>
 
                 <div className="space-y-3">
-                  {order.orderItems.map((item: any) => (
+                  {order.orderItems.map((item) => (
                     <div
-                      key={item.id}
+                      key={item.productId}
                       className="flex items-center justify-between rounded-2xl bg-zinc-50 px-4 py-3"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white shadow-sm">
-                          <Package className="h-5 w-5 text-[#3d593f]" />
+                        <div className="flex items-center">
+                          <Image
+                            src={item.productImage}
+                            alt="product image"
+                            width={150}
+                            height={50}
+                            priority
+                            className="h-auto w-35 object-contain sm:w-38.75   "
+                          />
                         </div>
 
                         <div>
@@ -121,16 +126,17 @@ const UserOrders = () => {
                           </p>
 
                           <p className="mt-0.5 text-xs text-zinc-500">
-                            Quantity: {item.quantity}
+                            Quantity: {item.orderItemsQuantity}
                           </p>
                         </div>
                       </div>
 
                       <p className="text-sm font-semibold text-zinc-900">
                         $
-                        {(Number(item.price) * Number(item.quantity)).toFixed(
-                          2,
-                        )}
+                        {(
+                          Number(item.orderItemPrice) *
+                          Number(item.orderItemsQuantity)
+                        ).toFixed(2)}
                       </p>
                     </div>
                   ))}
@@ -149,7 +155,7 @@ const UserOrders = () => {
                       <p className="text-xs text-zinc-400">Email</p>
 
                       <p className="truncate font-medium text-zinc-700">
-                        {order.customerEmail}
+                        {order.email}
                       </p>
                     </div>
                   </div>
